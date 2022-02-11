@@ -25,25 +25,36 @@ type FinScan struct {
 	Ch          chan []string
 	Wg          sync.WaitGroup
 	Thread      int
+	FingerPrint string
 	Output      string
+	OutputFocus	string
 	Proxy       string
 	AllResult   []Outrestul
 	FocusResult []Outrestul
 	Finpx       *Packjson
 }
 
-func NewScan(urls []string, thread int, output string, proxy string) *FinScan {
+func NewScan(urls []string, thread int, fingerprint string, output string, outputfocus string, proxy string) *FinScan {
 	s := &FinScan{
 		UrlQueue:    queue.NewQueue(),
 		Ch:          make(chan []string, thread),
 		Wg:          sync.WaitGroup{},
 		Thread:      thread,
+		FingerPrint: fingerprint,
 		Output:      output,
+		OutputFocus: outputfocus,
 		Proxy:       proxy,
 		AllResult:   []Outrestul{},
 		FocusResult: []Outrestul{},
 	}
-	err := LoadWebfingerprint(source.GetCurrentAbPathByExecutable() + "/finger.json")
+
+	var err error
+	if s.FingerPrint != "" {
+		err = LoadWebfingerprint(s.FingerPrint)
+	} else {
+		err = LoadWebfingerprint(source.GetCurrentAbPathByExecutable() + "/finger.json")
+	}
+
 	if err != nil {
 		color.RGBStyleFromString("237,64,35").Println("[error] fingerprint file error!!!")
 		os.Exit(1)
@@ -72,6 +83,10 @@ func (s *FinScan)StartScan() {
 	}
 	if s.Output != "" {
 		outfile(s.Output, s.AllResult)
+	}
+
+	if s.OutputFocus != "" {
+		outfile(s.OutputFocus, s.FocusResult)
 	}
 }
 
