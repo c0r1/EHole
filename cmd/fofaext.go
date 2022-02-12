@@ -39,13 +39,13 @@ var fofaextCmd = &cobra.Command{
 				if ext_fofaip != "" {
 					results := source.Fafaips_out(ext_fofaip)
 					fofaext.Fofaext(results, ext_output)
-					os.Exit(1)
+					os.Exit(0)
 				}
 				if ext_fofasearche != "" {
 					fmt.Println(ext_fofasearche)
 					results := source.Fofaall_out(ext_fofasearche)
 					fofaext.Fofaext(results, ext_output)
-					os.Exit(1)
+					os.Exit(0)
 				}
 			} else {
 				log.Println("文件名错误！！！")

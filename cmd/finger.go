@@ -40,24 +40,24 @@ var fingerCmd = &cobra.Command{
 			urls := removeRepeatedElement(source.LocalFile(localfile))
 			s := finger.NewScan(urls, thread, fingerprint, output, outputfocus, proxy)
 			s.StartScan()
-			os.Exit(1)
+			os.Exit(0)
 		}
 		if fofaip != "" {
 			urls := removeRepeatedElement(source.Fofaip(fofaip))
 			s := finger.NewScan(urls, thread, fingerprint, output, outputfocus, proxy)
 			s.StartScan()
-			os.Exit(1)
+			os.Exit(0)
 		}
 		if fofasearche != "" {
 			urls := removeRepeatedElement(source.Fafaall(fofasearche))
 			s := finger.NewScan(urls, thread, fingerprint, output, outputfocus, proxy)
 			s.StartScan()
-			os.Exit(1)
+			os.Exit(0)
 		}
 		if urla != "" {
 			s := finger.NewScan([]string{urla}, thread, fingerprint, output, outputfocus, proxy)
 			s.StartScan()
-			os.Exit(1)
+			os.Exit(0)
 		}
 	},
 }
