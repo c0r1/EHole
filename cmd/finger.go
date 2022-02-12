@@ -81,8 +81,8 @@ func init() {
 	fingerCmd.Flags().StringVarP(&localfile, "local", "l", "", "从本地文件读取资产，进行指纹识别，支持无协议，列如：192.168.1.1:9090 | http://192.168.1.1:9090")
 	fingerCmd.Flags().StringVarP(&urla, "url", "u", "", "识别单个目标。")
 	fingerCmd.Flags().StringVarP(&fingerprint, "fingerprint", "", "", "指定指纹列表文件")
-	fingerCmd.Flags().StringVarP(&output, "output", "o", "", "输出所有结果，当前仅支持json和xlsx后缀的文件。")
-	fingerCmd.Flags().StringVarP(&outputfocus, "output-focus", "", "", "输出重点资产，当前仅支持json和xlsx后缀的文件。")
+	fingerCmd.Flags().StringVarP(&output, "output", "o", "", "输出所有结果，当前仅支持json、xlsx、txt后缀的文件。")
+	fingerCmd.Flags().StringVarP(&outputfocus, "output-focus", "", "", "输出重点资产，当前仅支持json、xlsx、txt后缀的文件。")
 	fingerCmd.Flags().IntVarP(&thread, "thread", "t", 100, "指纹识别线程大小。")
 	fingerCmd.Flags().StringVarP(&proxy, "proxy", "p", "", "指定访问目标时的代理，支持http代理和socks5，例如：http://127.0.0.1:8080、socks5://127.0.0.1:8080")
 }

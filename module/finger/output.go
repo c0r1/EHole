@@ -3,6 +3,7 @@ package finger
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/gookit/color"
 	"os"
 	"strconv"
 	"strings"
@@ -47,19 +48,40 @@ func outxlsx(filename string, msg []Outrestul) {
 	}
 }
 
+func outtxt(filename string, allresult []Outrestul) {
+	f, err := os.Create(filename)
+	if err != nil {
+		fmt.Println(err.Error())
+		return
+	} else {
+		defer f.Close()
+		for _,aas := range allresult {
+			data := fmt.Sprintf(fmt.Sprintf("%s, %s, %s, %d, %d, %s\n", aas.Url, aas.Cms, aas.Server, aas.Statuscode, aas.Length, aas.Title))
+			if _, err = f.Write([]byte(data)); err != nil {
+				fmt.Println(err.Error())
+				return
+			}
+		}
+	}
+}
+
 func outfile(filename string, allresult []Outrestul) {
 	file := strings.Split(filename, ".")
 	fileSuffix := file[len(file)-1]
-	if fileSuffix == "json" {
+	switch fileSuffix {
+	case "txt":
+		outtxt(filename, allresult)
+	case "json":
 		buf, err := json.MarshalIndent(allresult, "", " ")
 		if err != nil {
 			fmt.Println(err.Error())
 			return
 		}
 		outjson(filename, buf)
-	}
-	if fileSuffix == "xlsx" {
+	case "xlsx":
 		outxlsx(filename, allresult)
+	default:
+		color.RGBStyleFromString("237,64,35").Printf("[error] Output file suffix error: %s\n", filename)
 	}
 
 }
